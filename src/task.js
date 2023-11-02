@@ -7,6 +7,16 @@ Task.tags;
 
 let idCounter = 0
 
+/**
+ * 
+ * @param {string} description 
+ * @param {date} date 
+ * @param {string} priority 
+ * @param {string} notes 
+ * @param {string} state 
+ * @param {string} space 
+ * @param {string} tags 
+ */
 Task.newTask = (description, date, priority, notes, state, space, tags) => {
     let obj = {};
     obj.description = description;
@@ -15,9 +25,13 @@ Task.newTask = (description, date, priority, notes, state, space, tags) => {
     obj.notes = notes;
     obj.state = state;
     obj.space = space;
-    obj.tags = [];
+    obj.tags = [''];
     obj.id = idCounter++;
 
+    /**
+     * 
+     * @param {string} tags 
+     */
     obj.setTags = (tags) => {
         obj.tags = tags.split(' ');
     }
