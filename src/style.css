@@ -1,0 +1,53 @@
+:root {
+    font-size: 62.5%;
+}
+
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+#app {
+    width: 1080px;
+    margin-top: 16rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+}
+
+.task-container {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    font-size: 2rem;
+    border-top: 1px solid black;
+}
+
+.task-description {
+    grid-column: 1 / -1;
+    font-size: 3rem;
+}
+
+.task-date {
+    grid-column: 1;
+}
+
+.task-priority {
+    grid-column: 2;
+}
+
+.task-notes-container {
+    grid-column: 3;
+}
+
+.task-state {
+    grid-column: 4;
+}
+
+.task-space {
+    grid-column: 5;
+}
+
+.task-tags-container {
+    grid-column: 6;
+}
