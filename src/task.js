@@ -41,4 +41,10 @@ Task.newTask = (description, date, priority, notes, state, space, tags) => {
     return obj;
 }
 
+Task.getTasks = (filters) => {}
+
+Task.removeTask = (task) => {}
+
+Task.sortTasks = (tasks, comparator, descending) => {}
+
 export { Task }
