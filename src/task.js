@@ -1,9 +1,15 @@
 let Task = {}
 
-Task.priotities = ['!0', '!1', '!2', '!3']
-Task.states;
-Task.spaces;
-Task.tags;
+Task.tags = ['#Tag1', '#Tag2']
+Task.spaces = {
+    'Default' : {
+        priotities: ['LOW', 'MEDIUM', 'HIGH'],
+        states : ['TODO', 'DOING', 'DONE'],
+    }
+};
+
+Task.boards = [];
+Task.list = [];
 
 let idCounter = 0
 
@@ -15,9 +21,8 @@ let idCounter = 0
  * @param {string} notes 
  * @param {string} state 
  * @param {string} space 
- * @param {string} tags 
  */
-Task.newTask = (description, date, priority, notes, state, space, tags) => {
+Task.newTask = (description, date, notes, tags, space, priority, state) => {
     let obj = {};
     obj.description = description;
     obj.date = date;
@@ -25,18 +30,9 @@ Task.newTask = (description, date, priority, notes, state, space, tags) => {
     obj.notes = notes;
     obj.state = state;
     obj.space = space;
-    obj.tags = [''];
+    obj.tags = tags;
+    obj.subtask = []
     obj.id = idCounter++;
-
-    /**
-     * 
-     * @param {string} tags 
-     */
-    obj.setTags = (tags) => {
-        obj.tags = tags.split(' ');
-    }
-
-    obj.setTags(tags);
 
     return obj;
 }

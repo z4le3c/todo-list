@@ -9,45 +9,52 @@ body {
 }
 
 #app {
-    width: 1080px;
+    width: 720px;
     margin-top: 16rem;
     display: flex;
     flex-direction: column;
     gap: 1.6rem;
 }
 
+.add-item {
+    background-color: white;
+    border: 1px solid black;
+    font-size: 6rem;
+    text-align: center;
+}
+
+.add-item:hover {
+    background-color: lightgray;
+}
+
+.add-item:active {
+    background-color: rgb(153, 153, 153);
+}
+
+.new-task {
+    width : 800px;
+    height: 100px;
+    border: 2px solid black;
+    position: absolute;
+    top: 30%;
+    left: calc(50% - 400px);
+    background-color: white;
+}
+
 .task-container {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    font-size: 2rem;
-    border-top: 1px solid black;
+    font-size: 1.8rem;
+    border: 1px solid black;
+    justify-content: center;
+}
+
+.task-container > div {
+    border: 1px solid black;
+    padding: .8rem 1.6rem;
 }
 
 .task-description {
     grid-column: 1 / -1;
-    font-size: 3rem;
-}
-
-.task-date {
-    grid-column: 1;
-}
-
-.task-priority {
-    grid-column: 2;
-}
-
-.task-notes-container {
-    grid-column: 3;
-}
-
-.task-state {
-    grid-column: 4;
-}
-
-.task-space {
-    grid-column: 5;
-}
-
-.task-tags-container {
-    grid-column: 6;
+    font-size: 2.4rem;
 }
