@@ -15,9 +15,17 @@ Handler.handleNewTaskInput = (newTask) => {
         'LOW', 
     );
     UI.addTaskToList(task);
+    Task.addTask(task);
+    console.log(Task.list)
 }
 
-UI.build(Handler);
+Handler.handleDeletion = (task) => {
+    Task.deleteTask(task);
+    console.log(Task.list);
+}
+
+UI.setHandler(Handler);
+UI.build();
 
 let t1 = Task.newTask(
     'Lorem ipsum dolor sit, amet consectetur adipisicing elit.', 
@@ -30,7 +38,4 @@ let t1 = Task.newTask(
 );
 
 UI.addTaskToList(t1)
-UI.addTaskToList(t1)
-UI.addTaskToList(t1)
-UI.addTaskToList(t1)
-UI.addTaskToList(t1)
+Task.addTask(t1);

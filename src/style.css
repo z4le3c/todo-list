@@ -23,15 +23,22 @@ body {
     text-align: center;
 }
 
-.add-item:hover {
+button {
+    background-color: white;
+    border: 1px solid black;
+    text-align: center;
+    font-size: 1.8rem;
+}
+
+button:hover {
     background-color: lightgray;
 }
 
-.add-item:active {
+button:active {
     background-color: rgb(153, 153, 153);
 }
 
-.new-task {
+.new-task-container {
     width : 800px;
     height: 100px;
     border: 2px solid black;
@@ -39,6 +46,21 @@ body {
     top: 30%;
     left: calc(50% - 400px);
     background-color: white;
+    padding: 0 1.6rem;
+
+    display: flex;
+    align-items: center;
+}
+
+.description-input,
+.description-input:focus {
+    border: none;
+    outline: none;
+    width: 60%;
+}
+.new-task-button {
+    width: 20%;
+    height: 5ch;
 }
 
 .task-container {

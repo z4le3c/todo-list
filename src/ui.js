@@ -3,36 +3,44 @@ let UI = {}
 let appContainer = document.querySelector('#app');
 let newTaskActive = false;
 
-UI.build = (handler) => {
+let _handler;
+
+UI.setHandler = (handler) => {
+    _handler = handler;
+}
+
+UI.build = () => {
     let addItemButton = document.createElement('button');
     addItemButton.classList.add('add-item');
     addItemButton.textContent = '+';
 
     addItemButton.addEventListener('click', () => {
         if (newTaskActive) return;
-        appContainer.appendChild(buildNewTaskInterface(handler))
+        appContainer.appendChild(buildNewTaskInterface(_handler))
         newTaskActive = true;
     });
     // here should be added the rest of the items stored
     appContainer.appendChild(addItemButton);
 }
 
-const buildNewTaskInterface = (handler) => {
+const buildNewTaskInterface = () => {
     let newTaskContainer = div();
     let descriptionInput = document.createElement('input');
     let addButton = document.createElement('button')
     let cancelButton = document.createElement('button')
 
-    newTaskContainer.classList.add('new-task');
+    newTaskContainer.classList.add('new-task-container');
+    addButton.classList.add('new-task-button');
     cancelButton.classList.add('new-task-button');
-    descriptionInput.classList.add('new-task-description');
+    descriptionInput.classList.add('task-description');
+    descriptionInput.classList.add('description-input');
 
     descriptionInput.setAttribute('type', 'text')
     descriptionInput.setAttribute('placeholder', 'description')
 
     addButton.textContent = 'add';
     addButton.addEventListener('click', () => {
-        handler.handleNewTaskInput({
+        _handler.handleNewTaskInput({
             description: descriptionInput.value,
         });
 
@@ -54,51 +62,35 @@ const buildNewTaskInterface = (handler) => {
 }
 
 const buildTask = (task) => {
-    let taskContainer = div();
-    let taskDescription = div();
-    let taskDate = div();
-    let taskPriority = div();
-    let taskNoteContainer = div();
-    let taskNotes = div();
-    let taskState = div();
-    let taskSpace = div();
-    let taskTagsContainer = div();
-    let taskTags = div();
+    let taskContainer = buildElement('div','', 'task-container');
+    let taskDescription = buildElement('div', task.description, 'task-description');
+    let taskDetails = buildElement('div', 'Details', 'task-details');
+    let taskDeleteButton = buildElement('button', 'Delete', 'task-delete');
 
-    taskContainer.classList.add('task-container');
-    taskDescription.classList.add('task-description');
-    taskDate.classList.add('task-date');
-    taskPriority.classList.add('task-priority');
-    taskNoteContainer.classList.add('task-notes-container');
-    taskNotes.classList.add('task-notes');
-    taskState.classList.add('task-state');
-    taskSpace.classList.add('task-space');
-    taskTagsContainer.classList.add('task-tags-container')
-    taskTags.classList.add('task-tags');
-
-    taskDescription.textContent = task.description
-    taskDate.textContent = task.date;
-    taskPriority.textContent = task.priority;
-    taskNotes.textContent = task.notes;
-    taskState.textContent = task.state;
-    taskSpace.textContent = task.space;
-    taskTags.textContent = task.tags;
+    taskDeleteButton.addEventListener('click', () => {
+        _handler.handleDeletion(task);
+        taskContainer.remove();
+    });
 
     taskContainer.appendChild(taskDescription);
-    taskContainer.appendChild(taskDate);
-    taskNoteContainer.appendChild(taskNotes);
-    taskContainer.appendChild(taskNoteContainer);
-    taskTagsContainer.appendChild(taskTags);
-    taskContainer.appendChild(taskTagsContainer);
-    taskContainer.appendChild(taskSpace);
-    taskContainer.appendChild(taskState);
-    taskContainer.appendChild(taskPriority);
+    taskContainer.appendChild(taskDetails);
+    taskContainer.appendChild(taskDeleteButton);
 
     return taskContainer;
 }
 
 UI.addTaskToList = (task) => {
     appContainer.appendChild(buildTask(task));
+}
+
+const buildElement = (type, text, _class) => {
+    let element = document.createElement(type);
+
+    element.classList.add(_class);
+
+    element.textContent = text;
+
+    return element;
 }
 
 const div = () => {

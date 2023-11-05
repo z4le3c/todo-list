@@ -9,9 +9,9 @@ Task.spaces = {
 };
 
 Task.boards = [];
-Task.list = [];
+Task.list = new Map();
 
-let idCounter = 0
+let _idCounter = 0;
 
 /**
  * 
@@ -32,14 +32,20 @@ Task.newTask = (description, date, notes, tags, space, priority, state) => {
     obj.space = space;
     obj.tags = tags;
     obj.subtask = []
-    obj.id = idCounter++;
+    obj.id = _idCounter++;
 
     return obj;
 }
 
-Task.getTasks = (filters) => {}
+Task.addTask = (task) => {
+    Task.list.set(task.id, task);
+}
 
-Task.removeTask = (task) => {}
+Task.deleteTask = (task) => {
+    Task.list.delete(task.id);
+}
+
+Task.getTasks = (filters) => {}
 
 Task.sortTasks = (tasks, comparator, descending) => {}
 
