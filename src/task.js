@@ -10,6 +10,10 @@ Task.spaces = {
         priotities: ['LOW', 'MEDIUM', 'HIGH'],
         states : ['TODO', 'DOING', 'DONE'],
     },
+    'Another' : {
+        priotities: ['LOW', 'MEDIUM', 'HIGH'],
+        states : ['TODO', 'DOING', 'DONE'],
+    },
 };
 
 Task.currentSpace = 'Default';
