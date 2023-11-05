@@ -16,8 +16,9 @@ body {
     gap: 1.6rem;
 }
 
-.space-name-div {
+.space-name-select {
     font-size: 4rem;
+    width: 25%;
 }
 
 .add-item-button {

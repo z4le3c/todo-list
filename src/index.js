@@ -30,6 +30,17 @@ Handler.getSpacesList = () => {
     return Task.getSpacesList()
 }
 
+Handler.getCurrentSpace = () => {
+    return Task.currentSpace;
+}
+
+Handler.setCurrentSpace = (space) => {
+    Task.currentSpace = space;
+    UI.createTaskList(Task.getTasks([
+        e => e.space == Task.currentSpace
+    ]));
+}
+
 let t1 = Task.newTask(
     'This belongs in Default', 
     'date', 
@@ -55,14 +66,14 @@ Task.addTask(t2);
 
 
 UI.setHandler(Handler);
-UI.createBaseInterface(Task.currentSpace);
+UI.createBaseInterface();
 UI.createTaskList(Task.getTasks([
     e => e.space == Task.currentSpace
 ]));
 
 /**
- * TODO add ability to change spaces task list
- * TODO make the default space when creating a new task to be the current space.
+ * DONE add ability to change spaces task list
+ * DONE make the default space when creating a new task to be the current space.
  * TODO add date functionality
  * TODO add priority functionality
  * TODO add ability to expand a single todo to see/edit its details

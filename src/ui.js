@@ -9,8 +9,12 @@ UI.setHandler = (handler) => {
     _handler = handler;
 }
 
-UI.createBaseInterface = (currentSpaceName) => {
-    let spaceNameDiv = buildElement('div', currentSpaceName, 'space-name-div');
+UI.createBaseInterface = () => {
+    let spaceNameSelect = buildSpaceSelect('space-name-select');
+    spaceNameSelect.addEventListener('click', () => { 
+        _handler.setCurrentSpace(spaceNameSelect.value);
+    })
+
     let addItemButton = buildElement('button', '+', 'add-item-button');
 
     addItemButton.addEventListener('click', () => {
@@ -19,7 +23,7 @@ UI.createBaseInterface = (currentSpaceName) => {
         newTaskActive = true;
     });
     // here should be added the rest of the items stored
-    appContainer.appendChild(spaceNameDiv);
+    appContainer.appendChild(spaceNameSelect);
     appContainer.appendChild(addItemButton);
 }
 
@@ -38,7 +42,7 @@ UI.createTaskList = (taskList) => {
 const buildNewTaskInterface = () => {
     let newTaskContainer = div();
     let descriptionInput = buildElement('input', '', 'task-description', 'description-input');
-    let spaceSelect = buildSpaceSelect();
+    let spaceSelect = buildSpaceSelect('space-select');
     let addButton = buildElement('button', 'add', 'new-task-button')
     let cancelButton = buildElement('button', 'cancel', 'new-task-button')
 
@@ -72,13 +76,20 @@ const buildNewTaskInterface = () => {
     return newTaskContainer;
 }
 
-const buildSpaceSelect = () => {
-    let select = buildElement('select', '', 'space-select');
+const buildSpaceSelect = (...cssClasses) => {
+    let select = buildElement('select', '', ...cssClasses);
 
     let spacesList = _handler.getSpacesList();
 
+    let option = document.createElement('option');
+    option.setAttribute('value', _handler.getCurrentSpace());
+    option.textContent = _handler.getCurrentSpace();
+    select.appendChild(option);
+
     for (const space of spacesList) {
-        let option = document.createElement('option');
+        if (space == _handler.getCurrentSpace()) continue;
+
+        option = document.createElement('option');
         option.setAttribute('value', space);
         option.textContent = space;
         
