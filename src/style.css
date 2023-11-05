@@ -16,7 +16,11 @@ body {
     gap: 1.6rem;
 }
 
-.add-item {
+.space-name-div {
+    font-size: 4rem;
+}
+
+.add-item-button {
     background-color: white;
     border: 1px solid black;
     font-size: 6rem;
@@ -49,6 +53,7 @@ button:active {
     padding: 0 1.6rem;
 
     display: flex;
+    justify-content: stretch;
     align-items: center;
 }
 
@@ -56,10 +61,16 @@ button:active {
 .description-input:focus {
     border: none;
     outline: none;
-    width: 60%;
+    width: 70%;
 }
+
+.space-select {
+    width: 10%;
+    height: 6.8ch;
+}
+
 .new-task-button {
-    width: 20%;
+    width: 10%;
     height: 5ch;
 }
 

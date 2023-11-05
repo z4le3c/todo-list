@@ -9,56 +9,83 @@ UI.setHandler = (handler) => {
     _handler = handler;
 }
 
-UI.build = () => {
-    let addItemButton = document.createElement('button');
-    addItemButton.classList.add('add-item');
-    addItemButton.textContent = '+';
+UI.createBaseInterface = (currentSpaceName) => {
+    let spaceNameDiv = buildElement('div', currentSpaceName, 'space-name-div');
+    let addItemButton = buildElement('button', '+', 'add-item-button');
 
     addItemButton.addEventListener('click', () => {
         if (newTaskActive) return;
-        appContainer.appendChild(buildNewTaskInterface(_handler))
+        appContainer.appendChild(buildNewTaskInterface())
         newTaskActive = true;
     });
     // here should be added the rest of the items stored
+    appContainer.appendChild(spaceNameDiv);
     appContainer.appendChild(addItemButton);
+}
+
+UI.createTaskList = (taskList) => {
+    let oldTask = document.querySelectorAll('.task-container');
+
+    for (const taskElement of oldTask) {
+        taskElement.remove();
+    }
+
+    for (const task of taskList) {
+        appContainer.appendChild(buildTask(task));
+    }
 }
 
 const buildNewTaskInterface = () => {
     let newTaskContainer = div();
-    let descriptionInput = document.createElement('input');
-    let addButton = document.createElement('button')
-    let cancelButton = document.createElement('button')
+    let descriptionInput = buildElement('input', '', 'task-description', 'description-input');
+    let spaceSelect = buildSpaceSelect();
+    let addButton = buildElement('button', 'add', 'new-task-button')
+    let cancelButton = buildElement('button', 'cancel', 'new-task-button')
 
     newTaskContainer.classList.add('new-task-container');
-    addButton.classList.add('new-task-button');
-    cancelButton.classList.add('new-task-button');
-    descriptionInput.classList.add('task-description');
-    descriptionInput.classList.add('description-input');
 
     descriptionInput.setAttribute('type', 'text')
     descriptionInput.setAttribute('placeholder', 'description')
 
-    addButton.textContent = 'add';
     addButton.addEventListener('click', () => {
+        if (spaceSelect.value == '') return;
+
         _handler.handleNewTaskInput({
             description: descriptionInput.value,
+            space: spaceSelect.value,
         });
 
         newTaskContainer.remove();
         newTaskActive = false;
     });
 
-    cancelButton.textContent = 'cancel';
     cancelButton.addEventListener('click', () => {
         newTaskContainer.remove();
         newTaskActive = false;
     });
 
     newTaskContainer.appendChild(descriptionInput)
+    newTaskContainer.appendChild(spaceSelect);
     newTaskContainer.appendChild(addButton);
     newTaskContainer.appendChild(cancelButton);
 
     return newTaskContainer;
+}
+
+const buildSpaceSelect = () => {
+    let select = buildElement('select', '', 'space-select');
+
+    let spacesList = _handler.getSpacesList();
+
+    for (const space of spacesList) {
+        let option = document.createElement('option');
+        option.setAttribute('value', space);
+        option.textContent = space;
+        
+        select.appendChild(option);
+    }
+
+    return select;
 }
 
 const buildTask = (task) => {
@@ -79,14 +106,12 @@ const buildTask = (task) => {
     return taskContainer;
 }
 
-UI.addTaskToList = (task) => {
-    appContainer.appendChild(buildTask(task));
-}
-
-const buildElement = (type, text, _class) => {
+const buildElement = (type, text, ...classes) => {
     let element = document.createElement(type);
 
-    element.classList.add(_class);
+    for (const cssClass of classes) {
+        element.classList.add(cssClass);
+    }
 
     element.textContent = text;
 

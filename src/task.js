@@ -5,8 +5,14 @@ Task.spaces = {
     'Default' : {
         priotities: ['LOW', 'MEDIUM', 'HIGH'],
         states : ['TODO', 'DOING', 'DONE'],
-    }
+    },
+    'Other' : {
+        priotities: ['LOW', 'MEDIUM', 'HIGH'],
+        states : ['TODO', 'DOING', 'DONE'],
+    },
 };
+
+Task.currentSpace = 'Default';
 
 Task.boards = [];
 Task.list = new Map();
@@ -45,8 +51,32 @@ Task.deleteTask = (task) => {
     Task.list.delete(task.id);
 }
 
-Task.getTasks = (filters) => {}
+Task.getTasks = (filters) => {
+    let list = [];
+
+    for (const task of Task.list.values()) {
+        list.push(task)
+        for (const filter of filters) {
+            if (!filter(task)) {
+                list.pop()
+                break;
+            }
+        }
+    }
+
+    return list;
+}
 
 Task.sortTasks = (tasks, comparator, descending) => {}
+
+Task.getSpacesList = () => {
+    let list = [];
+
+    for (const space in Task.spaces) {
+        list.push(space);
+    }
+
+    return list;
+}
 
 export { Task }

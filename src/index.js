@@ -10,12 +10,14 @@ Handler.handleNewTaskInput = (newTask) => {
         'date', 
         'notes', 
         '#t1 #t2',
-        'Default',
+        newTask.space,
         'TODO', 
         'LOW', 
     );
-    UI.addTaskToList(task);
     Task.addTask(task);
+    UI.createTaskList(Task.getTasks([
+        e => e.space == Task.currentSpace
+    ]));
     console.log(Task.list)
 }
 
@@ -24,11 +26,12 @@ Handler.handleDeletion = (task) => {
     console.log(Task.list);
 }
 
-UI.setHandler(Handler);
-UI.build();
+Handler.getSpacesList = () => {
+    return Task.getSpacesList()
+}
 
 let t1 = Task.newTask(
-    'Lorem ipsum dolor sit, amet consectetur adipisicing elit.', 
+    'This belongs in Default', 
     'date', 
     'notes', 
     '#t1 #t2',
@@ -37,5 +40,22 @@ let t1 = Task.newTask(
     'LOW', 
 );
 
-UI.addTaskToList(t1)
+let t2 = Task.newTask(
+    'This belongs in Other', 
+    'date', 
+    'notes', 
+    '#t1 #t2',
+    'Other',
+    'TODO', 
+    'LOW', 
+);
+
 Task.addTask(t1);
+Task.addTask(t2);
+
+
+UI.setHandler(Handler);
+UI.createBaseInterface(Task.currentSpace);
+UI.createTaskList(Task.getTasks([
+    e => e.space == Task.currentSpace
+]));
