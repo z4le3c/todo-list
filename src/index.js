@@ -65,4 +65,5 @@ UI.createTaskList(Task.getTasks([
  * TODO make the default space when creating a new task to be the current space.
  * TODO add date functionality
  * TODO add priority functionality
+ * TODO add ability to expand a single todo to see/edit its details
  */
