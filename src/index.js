@@ -59,3 +59,10 @@ UI.createBaseInterface(Task.currentSpace);
 UI.createTaskList(Task.getTasks([
     e => e.space == Task.currentSpace
 ]));
+
+/**
+ * TODO add ability to change spaces task list
+ * TODO make the default space when creating a new task to be the current space.
+ * TODO add date functionality
+ * TODO add priority functionality
+ */
