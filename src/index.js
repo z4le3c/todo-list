@@ -26,6 +26,12 @@ Handler.handleDeletion = (task) => {
     console.log(Task.list);
 }
 
+Handler.updateTask = (task, newAttributes) => {
+    for (const key in newAttributes) {
+        task[key] = newAttributes[key];
+    }
+}
+
 Handler.getSpacesList = () => {
     return Task.getSpacesList()
 }
@@ -75,7 +81,10 @@ UI.createTaskList(Task.getTasks([
  * DONE add ability to change spaces task list
  * DONE make the default space when creating a new task to be the current space.
  * DONE add date 
- * TODO add ability to expand a single todo to see/edit its details
+ * DONE add ability to expand a single todo to see/edit its details
+ * DONE add ability to edit and save the date of an existing task
+ * TODO add state property
+ * TODO add ability to chage the description of an existing task
  * TODO add priority
  * TODO save data
  */

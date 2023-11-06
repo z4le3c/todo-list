@@ -11,7 +11,7 @@ UI.setHandler = (handler) => {
 
 UI.createBaseInterface = () => {
     let spaceNameSelect = buildSpaceSelect('space-name-select');
-    spaceNameSelect.addEventListener('click', () => { 
+    spaceNameSelect.addEventListener('input', () => { 
         _handler.setCurrentSpace(spaceNameSelect.value);
     })
 
@@ -104,8 +104,32 @@ const buildSpaceSelect = (...cssClasses) => {
 const buildTask = (task) => {
     let taskContainer = buildElement('div','', 'task-container');
     let taskDescription = buildElement('div', task.description, 'task-description');
-    let taskDetails = buildElement('div', 'Details', 'task-details');
+    let taskDetails = buildElement('button', 'Details', 'task-details');
     let taskDeleteButton = buildElement('button', 'Delete', 'task-delete');
+    
+    let dateInput = buildElement('input','','date-input');
+    dateInput.setAttribute('type', 'date');
+    dateInput.setAttribute('value', task.date);
+    dateInput.addEventListener('input', () => {
+        _handler.updateTask(task, {date:dateInput.value})
+    });
+
+    taskDetails.addEventListener('click', () => {
+        if (taskDetails.textContent == 'Details') {
+            taskDetails.textContent = 'Less';
+            
+            taskDeleteButton.remove();
+
+            taskContainer.appendChild(dateInput)
+
+        } else if(taskDetails.textContent == 'Less') {
+            taskDetails.textContent = 'Details';
+
+            dateInput.remove();
+
+            taskContainer.appendChild(taskDeleteButton)
+        }
+    });
 
     taskDeleteButton.addEventListener('click', () => {
         _handler.handleDeletion(task);
