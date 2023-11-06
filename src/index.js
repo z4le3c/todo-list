@@ -36,6 +36,10 @@ Handler.getSpacesList = () => {
     return Task.getSpacesList()
 }
 
+Handler.getStates = () => {
+    return Task.spaces[Task.currentSpace].states;
+}
+
 Handler.getCurrentSpace = () => {
     return Task.currentSpace;
 }
@@ -47,29 +51,35 @@ Handler.setCurrentSpace = (space) => {
     ]));
 }
 
-let t1 = Task.newTask(
+Task.addTask(Task.newTask(
     'This belongs in Default', 
     '', 
     'notes', 
     '#t1 #t2',
     'Default',
-    'TODO', 
     'LOW', 
-);
+    'TODO', 
+));
 
-let t2 = Task.newTask(
+Task.addTask(Task.newTask(
+    'This also belongs to Default',
+    '2023-11-06',
+    'notes',
+    '#t1',
+    'Default',
+    'LOW',
+    'DOING',
+));
+
+Task.addTask(Task.newTask(
     'This belongs in Other', 
     '', 
     'notes', 
     '#t1 #t2',
     'Other',
-    'TODO', 
     'LOW', 
-);
-
-Task.addTask(t1);
-Task.addTask(t2);
-
+    'TODO', 
+));
 
 UI.setHandler(Handler);
 UI.createBaseInterface();
@@ -83,8 +93,10 @@ UI.createTaskList(Task.getTasks([
  * DONE add date 
  * DONE add ability to expand a single todo to see/edit its details
  * DONE add ability to edit and save the date of an existing task
- * TODO add state property
- * TODO add ability to chage the description of an existing task
+ * DONE add state property
+ * DONE add ability to chage the description of an existing task
+ * TODO fix the state positioning
+ * TODO add ability to change the space of an existing task.
  * TODO add priority
  * TODO save data
  */

@@ -16,7 +16,7 @@ body {
     gap: 1.6rem;
 }
 
-.space-name-select {
+.space-header-select {
     font-size: 4rem;
     width: 25%;
 }
@@ -60,14 +60,16 @@ button:active {
     align-content: space-evenly;
 }
 
-.description-input,
-.description-input:focus {
-    border: none;
-    outline: none;
+.new-task-container > .description-input {
     width: 69%;
 }
 
-.space-select {
+.description-input {
+    border: none;
+    outline: none;
+}
+
+.new-task-space-select {
     width: 10%;
     height: 6.8ch;
 }
@@ -83,6 +85,9 @@ button:active {
     font-size: 1.8rem;
     border: 1px solid black;
     justify-content: center;
+
+    padding: .8rem 1.6rem;
+    row-gap: .8rem;
 }
 
 .task-container > div {
@@ -94,3 +99,7 @@ button:active {
     grid-column: 1 / -1;
     font-size: 2.4rem;
 }
+
+/* .task-state {
+    grid-column: -1;
+} */

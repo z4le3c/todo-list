@@ -10,7 +10,12 @@ UI.setHandler = (handler) => {
 }
 
 UI.createBaseInterface = () => {
-    let spaceNameSelect = buildSpaceSelect('space-name-select');
+    let spaceNameSelect = buildSelect(
+        _handler.getCurrentSpace(),
+        _handler.getSpacesList(),
+        'space-header-select',
+    );
+
     spaceNameSelect.addEventListener('input', () => { 
         _handler.setCurrentSpace(spaceNameSelect.value);
     })
@@ -42,7 +47,11 @@ UI.createTaskList = (taskList) => {
 const buildNewTaskInterface = () => {
     let newTaskContainer = buildElement('div','','new-task-container');
     let descriptionInput = buildElement('input', '', 'task-description', 'description-input');
-    let spaceSelect = buildSpaceSelect('space-select');
+    let spaceSelect = buildSelect(
+        _handler.getCurrentSpace(),
+        _handler.getSpacesList(),
+        'new-task-space-select',
+    );
     let addButton = buildElement('button', 'add', 'new-task-button')
     let cancelButton = buildElement('button', 'cancel', 'new-task-button')
     let dateInput = buildElement('input','','date-input');
@@ -78,23 +87,20 @@ const buildNewTaskInterface = () => {
     return newTaskContainer;
 }
 
-const buildSpaceSelect = (...cssClasses) => {
+const buildSelect = (defaultOption, itemList, ...cssClasses) => {
     let select = buildElement('select', '', ...cssClasses);
 
-    let spacesList = _handler.getSpacesList();
-
     let option = document.createElement('option');
-    option.setAttribute('value', _handler.getCurrentSpace());
-    option.textContent = _handler.getCurrentSpace();
+    option.setAttribute('value', defaultOption);
+    option.textContent = defaultOption;
     select.appendChild(option);
 
-    for (const space of spacesList) {
-        if (space == _handler.getCurrentSpace()) continue;
+    for (const item of itemList) {
+        if (item == defaultOption) continue;
 
         option = document.createElement('option');
-        option.setAttribute('value', space);
-        option.textContent = space;
-        
+        option.setAttribute('value', item);
+        option.textContent = item;
         select.appendChild(option);
     }
 
@@ -103,15 +109,26 @@ const buildSpaceSelect = (...cssClasses) => {
 
 const buildTask = (task) => {
     let taskContainer = buildElement('div','', 'task-container');
-    let taskDescription = buildElement('div', task.description, 'task-description');
+    let taskDescription = buildElement('input', '', 'task-description', 'description-input');
     let taskDetails = buildElement('button', 'Details', 'task-details');
     let taskDeleteButton = buildElement('button', 'Delete', 'task-delete');
-    
-    let dateInput = buildElement('input','','date-input');
-    dateInput.setAttribute('type', 'date');
-    dateInput.setAttribute('value', task.date);
-    dateInput.addEventListener('input', () => {
-        _handler.updateTask(task, {date:dateInput.value})
+    let taskState = buildSelect(task.state, _handler.getStates(), 'task-state')
+    let taskDate = buildElement('input','','date-input');
+
+    taskDescription.setAttribute('type', 'text');
+    taskDescription.setAttribute('value', task.description);
+    taskDescription.addEventListener('input', () => {
+        _handler.updateTask(task, {description:taskDescription.value})
+    })
+
+    taskState.addEventListener('input', () => {
+        _handler.updateTask(task, {state: taskState.value});
+    });
+
+    taskDate.setAttribute('type', 'date');
+    taskDate.setAttribute('value', task.date);
+    taskDate.addEventListener('input', () => {
+        _handler.updateTask(task, {date:taskDate.value})
     });
 
     taskDetails.addEventListener('click', () => {
@@ -120,12 +137,12 @@ const buildTask = (task) => {
             
             taskDeleteButton.remove();
 
-            taskContainer.appendChild(dateInput)
+            taskContainer.appendChild(taskDate)
 
         } else if(taskDetails.textContent == 'Less') {
             taskDetails.textContent = 'Details';
 
-            dateInput.remove();
+            taskDate.remove();
 
             taskContainer.appendChild(taskDeleteButton)
         }
@@ -139,6 +156,7 @@ const buildTask = (task) => {
     taskContainer.appendChild(taskDescription);
     taskContainer.appendChild(taskDetails);
     taskContainer.appendChild(taskDeleteButton);
+    taskContainer.appendChild(taskState);
 
     return taskContainer;
 }
