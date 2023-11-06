@@ -56,13 +56,15 @@ button:active {
     display: flex;
     justify-content: stretch;
     align-items: center;
+    flex-wrap: wrap;
+    align-content: space-evenly;
 }
 
 .description-input,
 .description-input:focus {
     border: none;
     outline: none;
-    width: 70%;
+    width: 69%;
 }
 
 .space-select {

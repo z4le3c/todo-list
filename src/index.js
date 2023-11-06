@@ -7,7 +7,7 @@ let Handler = {}
 Handler.handleNewTaskInput = (newTask) => {
     let task = Task.newTask(
         newTask.description,
-        'date', 
+        newTask.date, 
         'notes', 
         '#t1 #t2',
         newTask.space,
@@ -43,7 +43,7 @@ Handler.setCurrentSpace = (space) => {
 
 let t1 = Task.newTask(
     'This belongs in Default', 
-    'date', 
+    '', 
     'notes', 
     '#t1 #t2',
     'Default',
@@ -53,7 +53,7 @@ let t1 = Task.newTask(
 
 let t2 = Task.newTask(
     'This belongs in Other', 
-    'date', 
+    '', 
     'notes', 
     '#t1 #t2',
     'Other',
@@ -74,7 +74,8 @@ UI.createTaskList(Task.getTasks([
 /**
  * DONE add ability to change spaces task list
  * DONE make the default space when creating a new task to be the current space.
- * TODO add date functionality
- * TODO add priority functionality
+ * DONE add date 
  * TODO add ability to expand a single todo to see/edit its details
+ * TODO add priority
+ * TODO save data
  */

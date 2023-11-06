@@ -40,16 +40,17 @@ UI.createTaskList = (taskList) => {
 }
 
 const buildNewTaskInterface = () => {
-    let newTaskContainer = div();
+    let newTaskContainer = buildElement('div','','new-task-container');
     let descriptionInput = buildElement('input', '', 'task-description', 'description-input');
     let spaceSelect = buildSpaceSelect('space-select');
     let addButton = buildElement('button', 'add', 'new-task-button')
     let cancelButton = buildElement('button', 'cancel', 'new-task-button')
-
-    newTaskContainer.classList.add('new-task-container');
+    let dateInput = buildElement('input','','date-input');
 
     descriptionInput.setAttribute('type', 'text')
     descriptionInput.setAttribute('placeholder', 'description')
+
+    dateInput.setAttribute('type', 'date');
 
     addButton.addEventListener('click', () => {
         if (spaceSelect.value == '') return;
@@ -57,6 +58,7 @@ const buildNewTaskInterface = () => {
         _handler.handleNewTaskInput({
             description: descriptionInput.value,
             space: spaceSelect.value,
+            date: dateInput.value,
         });
 
         newTaskContainer.remove();
@@ -72,7 +74,7 @@ const buildNewTaskInterface = () => {
     newTaskContainer.appendChild(spaceSelect);
     newTaskContainer.appendChild(addButton);
     newTaskContainer.appendChild(cancelButton);
-
+    newTaskContainer.appendChild(dateInput);
     return newTaskContainer;
 }
 
