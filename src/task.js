@@ -26,6 +26,22 @@ Task.list = new Map();
 
 let _idCounter = 0;
 
+Task.save = () => {
+    let SaveObject = {
+        list:Array.from(Task.list),
+        _idCounter
+    }
+    window.localStorage.setItem('data', JSON.stringify(SaveObject));
+}
+
+Task.load = () => {
+    let data = window.localStorage.getItem('data');
+    if (!data) return;
+    data = JSON.parse(data);
+    Task.list = new Map(data.list);
+    _idCounter = data._idCounter;
+}
+
 /**
  * 
  * @param {string} description 

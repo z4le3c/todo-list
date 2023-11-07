@@ -18,11 +18,15 @@ Handler.handleNewTaskInput = (newTask) => {
     UI.createTaskList(Task.getTasks([
         e => e.space == Task.currentSpace
     ]));
+    Task.save();
+
     console.log(Task.list)
 }
 
 Handler.handleDeletion = (task) => {
     Task.deleteTask(task);
+    Task.save();
+
     console.log(Task.list);
 }
 
@@ -30,6 +34,8 @@ Handler.updateTask = (task, newAttributes) => {
     for (const key in newAttributes) {
         task[key] = newAttributes[key];
     }
+
+    Task.save();
 }
 
 Handler.getSpacesList = () => {
@@ -94,6 +100,7 @@ Task.addTask(Task.newTask(
 
 UI.setHandler(Handler);
 UI.createBaseInterface();
+Task.load();
 UI.createTaskList(Task.getTasks([
     e => e.space == Task.currentSpace
 ]));
@@ -109,5 +116,5 @@ UI.createTaskList(Task.getTasks([
  * DONE fix the state positioning
  * DONE add ability to change the space of an existing task.
  * DONE add priority
- * DOING save data
+ * DONE save data
  */
