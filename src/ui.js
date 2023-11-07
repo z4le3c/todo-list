@@ -107,6 +107,10 @@ const buildSelect = (defaultOption, itemList, ...cssClasses) => {
     return select;
 }
 
+const setPriorityColor = (task, taskContainer) => {
+    taskContainer.style.border = `1px solid ${_handler.getPriorityColor(task)}`;
+}
+
 const buildTask = (task) => {
     let taskContainer = buildElement('div','', 'task-container');
     let taskDescription = buildElement('input', '', 'task-description', 'description-input');
@@ -114,6 +118,10 @@ const buildTask = (task) => {
     let taskDeleteButton = buildElement('button', 'Delete', 'task-delete');
     let taskState = buildSelect(task.state, _handler.getStates(), 'task-state')
     let taskDate = buildElement('input','','date-input');
+    let taskSpace = buildSelect(task.space, _handler.getSpacesList(), 'task-space');
+    let taskPriority = buildSelect(task.priority, _handler.getPriorities(), 'task-priority');
+
+    setPriorityColor(task, taskContainer);
 
     taskDescription.setAttribute('type', 'text');
     taskDescription.setAttribute('value', task.description);
@@ -131,6 +139,16 @@ const buildTask = (task) => {
         _handler.updateTask(task, {date:taskDate.value})
     });
 
+    taskSpace.addEventListener('input', () => {
+        _handler.updateTask(task, {space:taskSpace.value})
+        _handler.setCurrentSpace(_handler.getCurrentSpace())
+    })
+
+    taskPriority.addEventListener('input', () => {
+        _handler.updateTask(task, {priority:taskPriority.value})
+        setPriorityColor(task, taskContainer);
+    })
+
     taskDetails.addEventListener('click', () => {
         if (taskDetails.textContent == 'Details') {
             taskDetails.textContent = 'Less';
@@ -139,12 +157,17 @@ const buildTask = (task) => {
             taskState.remove();
 
             taskContainer.appendChild(taskDate)
+            taskContainer.appendChild(taskSpace)
+            taskContainer.appendChild(taskPriority)
             taskContainer.appendChild(taskState)
 
         } else if(taskDetails.textContent == 'Less') {
             taskDetails.textContent = 'Details';
 
             taskDate.remove();
+            taskSpace.remove();
+            taskPriority.remove();
+            taskState.remove();
 
             taskContainer.appendChild(taskDeleteButton)
             taskContainer.appendChild(taskState)

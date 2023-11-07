@@ -3,15 +3,18 @@ let Task = {}
 Task.tags = ['#Tag1', '#Tag2']
 Task.spaces = {
     'Default' : {
-        priotities: ['LOW', 'MEDIUM', 'HIGH'],
+        priorities: ['LOW', 'MEDIUM', 'HIGH'],
+        colors: ['black', 'blue', 'red'],
         states : ['TODO', 'DOING', 'DONE'],
     },
     'Other' : {
-        priotities: ['LOW', 'MEDIUM', 'HIGH'],
+        priorities: ['LOW', 'MEDIUM', 'HIGH'],
+        colors: ['black', 'blue', 'red'],
         states : ['TODO', 'DOING', 'DONE'],
     },
     'Another' : {
-        priotities: ['LOW', 'MEDIUM', 'HIGH'],
+        priorities: ['LOW', 'MEDIUM', 'HIGH'],
+        colors: ['black', 'blue', 'red'],
         states : ['TODO', 'DOING', 'DONE'],
     },
 };

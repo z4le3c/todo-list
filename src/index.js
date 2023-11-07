@@ -11,8 +11,8 @@ Handler.handleNewTaskInput = (newTask) => {
         'notes', 
         '#t1 #t2',
         newTask.space,
-        'TODO', 
         'LOW', 
+        'TODO', 
     );
     Task.addTask(task);
     UI.createTaskList(Task.getTasks([
@@ -40,10 +40,21 @@ Handler.getStates = () => {
     return Task.spaces[Task.currentSpace].states;
 }
 
+Handler.getPriorities = () => {
+    return Task.spaces[Task.currentSpace].priorities;    
+}
+
 Handler.getCurrentSpace = () => {
     return Task.currentSpace;
 }
 
+Handler.getPriorityColor = (task) => {
+    let colors = Task.spaces[task.space].colors;
+    let colorI = Task.spaces[task.space].priorities.findIndex((e) => e == task.priority);
+    return colors[colorI];
+}
+
+// changes the current space and shows that space list.
 Handler.setCurrentSpace = (space) => {
     Task.currentSpace = space;
     UI.createTaskList(Task.getTasks([
@@ -96,7 +107,7 @@ UI.createTaskList(Task.getTasks([
  * DONE add state property
  * DONE add ability to chage the description of an existing task
  * DONE fix the state positioning
- * TODO add ability to change the space of an existing task.
- * TODO add priority
- * TODO save data
+ * DONE add ability to change the space of an existing task.
+ * DONE add priority
+ * DOING save data
  */
