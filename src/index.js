@@ -117,4 +117,8 @@ UI.createTaskList(Task.getTasks([
  * DONE add ability to change the space of an existing task.
  * DONE add priority
  * DONE save data
+ * TODO add priority and state selection when adding a task
+ * TODO add ability to sort task
+ * TODO add time
+ * TODO add ability to make and delete spaces
  */
