@@ -95,7 +95,7 @@ UI.createTaskList(Task.getTasks([
  * DONE add ability to edit and save the date of an existing task
  * DONE add state property
  * DONE add ability to chage the description of an existing task
- * TODO fix the state positioning
+ * DONE fix the state positioning
  * TODO add ability to change the space of an existing task.
  * TODO add priority
  * TODO save data

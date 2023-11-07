@@ -136,8 +136,10 @@ const buildTask = (task) => {
             taskDetails.textContent = 'Less';
             
             taskDeleteButton.remove();
+            taskState.remove();
 
             taskContainer.appendChild(taskDate)
+            taskContainer.appendChild(taskState)
 
         } else if(taskDetails.textContent == 'Less') {
             taskDetails.textContent = 'Details';
@@ -145,6 +147,7 @@ const buildTask = (task) => {
             taskDate.remove();
 
             taskContainer.appendChild(taskDeleteButton)
+            taskContainer.appendChild(taskState)
         }
     });
 
@@ -171,10 +174,6 @@ const buildElement = (type, text, ...classes) => {
     element.textContent = text;
 
     return element;
-}
-
-const div = () => {
-    return document.createElement('div');
 }
 
 export { UI };
