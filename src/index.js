@@ -11,8 +11,8 @@ Handler.handleNewTaskInput = (newTask) => {
         'notes', 
         '#t1 #t2',
         newTask.space,
-        'LOW', 
-        'TODO', 
+        newTask.priority, 
+        newTask.state, 
     );
     Task.addTask(task);
     UI.createTaskList(Task.getTasks([
@@ -139,7 +139,8 @@ UI.createTaskList(Task.getTasks([
  * DONE add priority
  * DONE save data
  * DONE add ability to make and delete spaces
- * TODO add priority and state selection when adding a task
+ * DONE add priority and state selection when adding a task
  * TODO add ability to sort task
+ * TODO create new task by pressing enter
  * TODO add time
  */

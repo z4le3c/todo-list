@@ -83,6 +83,7 @@ UI.createBaseInterface = () => {
         confirmButton.addEventListener('click', () => {
             _handler.deleteCurrentSpace()
             
+            // restores previews state
             spaceWarningContainer.remove();
 
             spaceContainer.appendChild(addSpaceButton);
@@ -90,6 +91,7 @@ UI.createBaseInterface = () => {
         })
 
         cancelButton.addEventListener('click', () => {
+            // restores previews state
             spaceWarningContainer.remove();
 
             spaceContainer.appendChild(addSpaceButton);
@@ -141,6 +143,10 @@ const buildNewTaskInterface = () => {
     let addButton = buildElement('button', 'add', 'new-task-button')
     let cancelButton = buildElement('button', 'cancel', 'new-task-button')
     let dateInput = buildElement('input','','date-input');
+    const posibleStates = _handler.getStates()
+    const posiblePriorities = _handler.getPriorities()
+    let prioritySelect = buildSelect(posiblePriorities[0], posiblePriorities, 'new-task-priority')
+    let stateSelect = buildSelect(posibleStates[0], posibleStates, 'new-task-state')
 
     descriptionInput.setAttribute('type', 'text')
     descriptionInput.setAttribute('placeholder', 'description')
@@ -154,6 +160,8 @@ const buildNewTaskInterface = () => {
             description: descriptionInput.value,
             space: spaceSelect.value,
             date: dateInput.value,
+            priority:prioritySelect.value,
+            state:stateSelect.value,
         });
 
         newTaskContainer.remove();
@@ -170,6 +178,8 @@ const buildNewTaskInterface = () => {
     newTaskContainer.appendChild(addButton);
     newTaskContainer.appendChild(cancelButton);
     newTaskContainer.appendChild(dateInput);
+    newTaskContainer.appendChild(prioritySelect);
+    newTaskContainer.appendChild(stateSelect);
     return newTaskContainer;
 }
 
