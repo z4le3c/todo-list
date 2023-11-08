@@ -29,17 +29,36 @@ let _idCounter = 0;
 Task.save = () => {
     let SaveObject = {
         list:Array.from(Task.list),
-        _idCounter
+        _idCounter,
+        spaces:Task.spaces,
     }
     window.localStorage.setItem('data', JSON.stringify(SaveObject));
+}
+Task.saveCurrentSpace = () => {
+    window.localStorage.setItem('currentSpace', Task.currentSpace);
 }
 
 Task.load = () => {
     let data = window.localStorage.getItem('data');
-    if (!data) return;
-    data = JSON.parse(data);
-    Task.list = new Map(data.list);
-    _idCounter = data._idCounter;
+    if (data) {
+        data = JSON.parse(data);
+        Task.list = new Map(data.list);
+        _idCounter = data._idCounter;
+        Task.spaces = data.spaces;
+        Task.currentSpace = data.currentSpace;
+    }
+    let currentSpace = window.localStorage.getItem('currentSpace')
+    if (currentSpace) {
+        Task.currentSpace = currentSpace
+    }
+}
+
+Task.makeDefaultSpaceElements = () => {
+    return {
+        priorities: ['LOW', 'MEDIUM', 'HIGH'],
+        colors: ['black', 'blue', 'red'],
+        states : ['TODO', 'DOING', 'DONE'],
+    }
 }
 
 /**
@@ -72,6 +91,14 @@ Task.addTask = (task) => {
 
 Task.deleteTask = (task) => {
     Task.list.delete(task.id);
+}
+
+Task.deleteTasks = (filters) => {
+    let taskToDelete = Task.getTasks(filters);
+
+    for (const task of taskToDelete) {
+        Task.list.delete(task.id);
+    }
 }
 
 Task.getTasks = (filters) => {

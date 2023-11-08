@@ -9,18 +9,101 @@ UI.setHandler = (handler) => {
     _handler = handler;
 }
 
-UI.createBaseInterface = () => {
-    let spaceNameSelect = buildSelect(
+UI.updateSpaceHeader = () => {
+    let oldSpaceSelect = document.querySelector('.space-header-select')
+    let newSpaceSelect = buildSelect(
         _handler.getCurrentSpace(),
         _handler.getSpacesList(),
         'space-header-select',
     );
 
-    spaceNameSelect.addEventListener('input', () => { 
-        _handler.setCurrentSpace(spaceNameSelect.value);
+    newSpaceSelect.addEventListener('input', () => { 
+        _handler.setCurrentSpace(newSpaceSelect.value);
     })
 
+    oldSpaceSelect.replaceWith(newSpaceSelect);
+}
+
+UI.createBaseInterface = () => {
+    let spaceContainer = buildElement('div', '', 'space-container')
+    let spaceSelect = buildSelect(
+        _handler.getCurrentSpace(),
+        _handler.getSpacesList(),
+        'space-header-select',
+    );
+    let addSpaceButton = buildElement('button', '+', 'space-option-button')
+    let deleteSpaceButton = buildElement('button', '-', 'space-option-button')
     let addItemButton = buildElement('button', '+', 'add-item-button');
+
+    spaceSelect.addEventListener('input', () => { 
+        _handler.setCurrentSpace(spaceSelect.value);
+    })
+
+    addSpaceButton.addEventListener('click', () => {
+        let spaceInputContainer = buildElement('div', '', 'space-input-container');
+        let textInput = buildElement('input', '', 'space-input');
+        let newSpaceButton = buildElement('button', 'new space', 'new-space-button');
+        let cancelSpaceButton = buildElement('button', 'cancel', 'new-space-button');
+
+        textInput.setAttribute('type', 'text');
+        textInput.setAttribute('placeholder', 'space name')
+        let cleanSpaceOptions = () => {
+            spaceInputContainer.remove()
+
+            spaceContainer.appendChild(addSpaceButton)
+            spaceContainer.appendChild(deleteSpaceButton)
+        }
+        newSpaceButton.addEventListener('click', () => {
+            if (textInput.value == '') return 
+
+            _handler.addNewSpace(textInput.value);
+
+            cleanSpaceOptions()
+        });
+
+        cancelSpaceButton.addEventListener('click', () => {
+            cleanSpaceOptions()
+        });
+
+        addSpaceButton.remove();
+        deleteSpaceButton.remove();
+
+        spaceInputContainer.appendChild(textInput);
+        spaceInputContainer.appendChild(newSpaceButton);
+        spaceInputContainer.appendChild(cancelSpaceButton);
+        spaceContainer.appendChild(spaceInputContainer);
+    })
+
+    deleteSpaceButton.addEventListener('click', () => {
+        let spaceWarningContainer = buildElement('div', '', 'space-warning-container');
+        let warningText = buildElement('div', 'Do you want to delete the current space?', 'delete-space-warning');
+        let confirmButton = buildElement('button', 'Yes', 'deletion-button')
+        let cancelButton = buildElement('button', 'Cancel', 'deletion-button')
+
+        confirmButton.addEventListener('click', () => {
+            _handler.deleteCurrentSpace()
+            
+            spaceWarningContainer.remove();
+
+            spaceContainer.appendChild(addSpaceButton);
+            spaceContainer.appendChild(deleteSpaceButton);
+        })
+
+        cancelButton.addEventListener('click', () => {
+            spaceWarningContainer.remove();
+
+            spaceContainer.appendChild(addSpaceButton);
+            spaceContainer.appendChild(deleteSpaceButton);
+        })
+
+        addSpaceButton.remove();
+        deleteSpaceButton.remove();
+
+        spaceWarningContainer.appendChild(warningText);
+        spaceWarningContainer.appendChild(confirmButton);
+        spaceWarningContainer.appendChild(cancelButton);
+        spaceContainer.appendChild(spaceWarningContainer);
+    })
 
     addItemButton.addEventListener('click', () => {
         if (newTaskActive) return;
@@ -28,7 +111,10 @@ UI.createBaseInterface = () => {
         newTaskActive = true;
     });
     // here should be added the rest of the items stored
-    appContainer.appendChild(spaceNameSelect);
+    spaceContainer.appendChild(spaceSelect);
+    spaceContainer.appendChild(addSpaceButton);
+    spaceContainer.appendChild(deleteSpaceButton);
+    appContainer.appendChild(spaceContainer);
     appContainer.appendChild(addItemButton);
 }
 
@@ -107,10 +193,6 @@ const buildSelect = (defaultOption, itemList, ...cssClasses) => {
     return select;
 }
 
-const setPriorityColor = (task, taskContainer) => {
-    taskContainer.style.border = `1px solid ${_handler.getPriorityColor(task)}`;
-}
-
 const buildTask = (task) => {
     let taskContainer = buildElement('div','', 'task-container');
     let taskDescription = buildElement('input', '', 'task-description', 'description-input');
@@ -121,7 +203,7 @@ const buildTask = (task) => {
     let taskSpace = buildSelect(task.space, _handler.getSpacesList(), 'task-space');
     let taskPriority = buildSelect(task.priority, _handler.getPriorities(), 'task-priority');
 
-    setPriorityColor(task, taskContainer);
+    taskContainer.style.border = `1px solid ${_handler.getPriorityColor(task)}`;
 
     taskDescription.setAttribute('type', 'text');
     taskDescription.setAttribute('value', task.description);

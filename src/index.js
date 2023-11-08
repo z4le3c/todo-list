@@ -23,11 +23,31 @@ Handler.handleNewTaskInput = (newTask) => {
     console.log(Task.list)
 }
 
+Handler.addNewSpace = (spaceName) => {
+    Task.spaces[spaceName] = Task.makeDefaultSpaceElements();
+    UI.updateSpaceHeader();
+    Task.save()
+}
+
 Handler.handleDeletion = (task) => {
     Task.deleteTask(task);
     Task.save();
 
     console.log(Task.list);
+}
+
+Handler.deleteCurrentSpace = () => {
+    let spaces = Task.getSpacesList();
+    if (spaces.length == 1) return
+    
+    delete Task.spaces[Task.currentSpace];
+    Task.deleteTasks([(e) => e.space == Task.currentSpace]);
+    spaces = Task.getSpacesList();
+    Task.currentSpace = spaces[0];
+
+    Handler.setCurrentSpace(Task.currentSpace);
+    UI.updateSpaceHeader();
+    Task.save()
 }
 
 Handler.updateTask = (task, newAttributes) => {
@@ -66,6 +86,7 @@ Handler.setCurrentSpace = (space) => {
     UI.createTaskList(Task.getTasks([
         e => e.space == Task.currentSpace
     ]));
+    Task.saveCurrentSpace();
 }
 
 Task.addTask(Task.newTask(
@@ -84,7 +105,7 @@ Task.addTask(Task.newTask(
     'notes',
     '#t1',
     'Default',
-    'LOW',
+    'HIGH',
     'DOING',
 ));
 
@@ -98,9 +119,9 @@ Task.addTask(Task.newTask(
     'TODO', 
 ));
 
+Task.load();
 UI.setHandler(Handler);
 UI.createBaseInterface();
-Task.load();
 UI.createTaskList(Task.getTasks([
     e => e.space == Task.currentSpace
 ]));
@@ -117,8 +138,8 @@ UI.createTaskList(Task.getTasks([
  * DONE add ability to change the space of an existing task.
  * DONE add priority
  * DONE save data
+ * DONE add ability to make and delete spaces
  * TODO add priority and state selection when adding a task
  * TODO add ability to sort task
  * TODO add time
- * TODO add ability to make and delete spaces
  */
