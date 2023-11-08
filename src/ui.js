@@ -76,7 +76,7 @@ UI.createBaseInterface = () => {
 
     deleteSpaceButton.addEventListener('click', () => {
         let spaceWarningContainer = buildElement('div', '', 'space-warning-container');
-        let warningText = buildElement('div', 'Do you want to delete the current space?', 'delete-space-warning');
+        let warningText = buildElement('div', 'Delete current space?', 'delete-space-warning');
         let confirmButton = buildElement('button', 'Yes', 'deletion-button')
         let cancelButton = buildElement('button', 'Cancel', 'deletion-button')
 
@@ -207,6 +207,7 @@ const buildTask = (task) => {
 
     taskDescription.setAttribute('type', 'text');
     taskDescription.setAttribute('value', task.description);
+    taskDescription.setAttribute('placeholder', 'task description');
     taskDescription.addEventListener('input', () => {
         _handler.updateTask(task, {description:taskDescription.value})
     })
