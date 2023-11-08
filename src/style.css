@@ -33,14 +33,16 @@ body {
 }
 
 .space-input-container, 
-.space-warning-container {
+.space-warning-container,
+.space-edit-container {
     width: 75%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
 }
 
 .space-input,
-.delete-space-warning {
+.delete-space-warning,
+.space-edit-input {
     font-size: 2rem;
     outline: none;
 }

@@ -58,6 +58,19 @@ Handler.updateTask = (task, newAttributes) => {
     Task.save();
 }
 
+Handler.updateCurrentSpaceName = (newName) => {
+    if (newName == Task.currentSpace) return ;
+
+    Task.spaces[newName] = Task.spaces[Task.currentSpace]
+    delete Task.spaces[Task.currentSpace]
+
+    Task.currentSpace = newName;
+
+    UI.updateSpaceHeader()
+    Task.save();
+    Task.saveCurrentSpace();
+}
+
 Handler.getSpacesList = () => {
     return Task.getSpacesList()
 }
@@ -143,4 +156,5 @@ UI.createTaskList(Task.getTasks([
  * TODO add ability to sort task
  * TODO create new task by pressing enter
  * TODO add time
+ * DONE edit a space name
  */

@@ -31,10 +31,17 @@ UI.createBaseInterface = () => {
         _handler.getSpacesList(),
         'space-header-select',
     );
-    let addSpaceButton = buildElement('button', '+', 'space-option-button')
-    let deleteSpaceButton = buildElement('button', '-', 'space-option-button')
+    let buttonsContainer = buildElement('div', '', 'space-buttons-container');
+    let addSpaceButton = buildElement('button', '+', 'space-option-button');
+    let deleteSpaceButton = buildElement('button', '-', 'space-option-button');
+    let editSpaceButton = buildElement('button', 'e', 'space-option-button');
     let addItemButton = buildElement('button', '+', 'add-item-button');
 
+
+    buttonsContainer.appendChild(addSpaceButton)
+    buttonsContainer.appendChild(deleteSpaceButton)
+    buttonsContainer.appendChild(editSpaceButton)
+    
     spaceSelect.addEventListener('input', () => { 
         _handler.setCurrentSpace(spaceSelect.value);
     })
@@ -47,26 +54,24 @@ UI.createBaseInterface = () => {
 
         textInput.setAttribute('type', 'text');
         textInput.setAttribute('placeholder', 'space name')
-        let cleanSpaceOptions = () => {
+        let restorePrevState = () => {
             spaceInputContainer.remove()
 
-            spaceContainer.appendChild(addSpaceButton)
-            spaceContainer.appendChild(deleteSpaceButton)
+            spaceContainer.appendChild(buttonsContainer)
         }
         newSpaceButton.addEventListener('click', () => {
             if (textInput.value == '') return 
 
             _handler.addNewSpace(textInput.value);
 
-            cleanSpaceOptions()
+            restorePrevState()
         });
 
         cancelSpaceButton.addEventListener('click', () => {
-            cleanSpaceOptions()
+            restorePrevState()
         });
 
-        addSpaceButton.remove();
-        deleteSpaceButton.remove();
+        buttonsContainer.remove();
 
         spaceInputContainer.appendChild(textInput);
         spaceInputContainer.appendChild(newSpaceButton);
@@ -80,31 +85,62 @@ UI.createBaseInterface = () => {
         let confirmButton = buildElement('button', 'Yes', 'deletion-button')
         let cancelButton = buildElement('button', 'Cancel', 'deletion-button')
 
+        let restorePrevState = () => {
+            spaceWarningContainer.remove()
+
+            spaceContainer.appendChild(buttonsContainer)
+        }
+
         confirmButton.addEventListener('click', () => {
             _handler.deleteCurrentSpace()
             
-            // restores previews state
-            spaceWarningContainer.remove();
-
-            spaceContainer.appendChild(addSpaceButton);
-            spaceContainer.appendChild(deleteSpaceButton);
+            restorePrevState()
         })
 
         cancelButton.addEventListener('click', () => {
-            // restores previews state
-            spaceWarningContainer.remove();
-
-            spaceContainer.appendChild(addSpaceButton);
-            spaceContainer.appendChild(deleteSpaceButton);
+            restorePrevState()
         })
 
-        addSpaceButton.remove();
-        deleteSpaceButton.remove();
+        buttonsContainer.remove();
 
         spaceWarningContainer.appendChild(warningText);
         spaceWarningContainer.appendChild(confirmButton);
         spaceWarningContainer.appendChild(cancelButton);
         spaceContainer.appendChild(spaceWarningContainer);
+    })
+
+    editSpaceButton.addEventListener('click', () => {
+        let spaceEditContainer = buildElement('div', '', 'space-edit-container');
+        let textInput = buildElement('input', '', 'space-edit-input');
+        let confirmButton = buildElement('button', 'change name', 'edit-space-button');
+        let cancelButton = buildElement('button', 'cancel', 'edit-space-button');
+
+        textInput.setAttribute('type', 'text');
+        textInput.setAttribute('value', _handler.getCurrentSpace());
+
+        const restorePrevState = () => {
+            spaceEditContainer.remove();
+
+            spaceContainer.appendChild(buttonsContainer);
+        }
+
+        confirmButton.addEventListener('click', () => {
+            _handler.updateCurrentSpaceName(textInput.value);
+
+            restorePrevState()
+        })
+
+        cancelButton.addEventListener('click', () => {
+            restorePrevState()
+        })
+
+        buttonsContainer.remove()
+
+        spaceEditContainer.appendChild(textInput);
+        spaceEditContainer.appendChild(confirmButton);
+        spaceEditContainer.appendChild(cancelButton);
+
+        spaceContainer.appendChild(spaceEditContainer);
     })
 
     addItemButton.addEventListener('click', () => {
@@ -114,8 +150,7 @@ UI.createBaseInterface = () => {
     });
     // here should be added the rest of the items stored
     spaceContainer.appendChild(spaceSelect);
-    spaceContainer.appendChild(addSpaceButton);
-    spaceContainer.appendChild(deleteSpaceButton);
+    spaceContainer.appendChild(buttonsContainer);
     appContainer.appendChild(spaceContainer);
     appContainer.appendChild(addItemButton);
 }

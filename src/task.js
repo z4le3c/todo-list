@@ -34,6 +34,7 @@ Task.save = () => {
     }
     window.localStorage.setItem('data', JSON.stringify(SaveObject));
 }
+
 Task.saveCurrentSpace = () => {
     window.localStorage.setItem('currentSpace', Task.currentSpace);
 }
