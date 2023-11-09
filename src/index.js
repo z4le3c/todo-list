@@ -153,9 +153,15 @@ UI.createTaskList(Task.getTasks([
  * DONE save data
  * DONE add ability to make and delete spaces
  * DONE add priority and state selection when adding a task
- * TODO add ability to sort task
  * DONE edit a space name
- * TODO create new task by pressing enter
  * DONE add notes
+ * TODO add ability to sort task
+ * TODO create new task by pressing enter
+ * TODO close notes with the 'escape' key
+ * TODO clean up buildTask & buildNewTaskInterface
  * TODO add time
+ * TODO add tags
+ * TODO add filters
+ * TODO add manual sorting and save it on 'boards'
+ * TODO add subtask
  */
