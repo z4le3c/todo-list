@@ -64,6 +64,12 @@ Handler.updateCurrentSpaceName = (newName) => {
     Task.spaces[newName] = Task.spaces[Task.currentSpace]
     delete Task.spaces[Task.currentSpace]
 
+    // update the task space of the previous space
+    let currSpaceTask = Task.getTasks([(e) => e.space == Task.currentSpace])
+    for (const task of currSpaceTask) {
+        task.space = newName;
+    }
+
     Task.currentSpace = newName;
 
     UI.updateSpaceHeader()
