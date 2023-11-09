@@ -122,6 +122,10 @@ button:active {
     row-gap: .8rem;
 }
 
+.task-container-with-notes {
+    grid-template-rows: repeat(5, 1fr);
+}
+
 .task-container > div {
     border: 1px solid black;
     padding: .8rem 1.6rem;
@@ -134,4 +138,11 @@ button:active {
 
 .task-state {
     grid-column: -2;
+}
+
+.task-notes-textarea {
+    grid-column: 1 / -1;
+    grid-row: 3 / 6;
+
+    resize: none;
 }

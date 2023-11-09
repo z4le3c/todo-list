@@ -247,6 +247,8 @@ const buildTask = (task) => {
     let taskDate = buildElement('input','','date-input');
     let taskSpace = buildSelect(task.space, _handler.getSpacesList(), 'task-space');
     let taskPriority = buildSelect(task.priority, _handler.getPriorities(), 'task-priority');
+    let taskNotes = buildElement('button', 'notes', 'task-notes');
+    let taskNotesTextarea = buildElement('textarea', task.notes, 'task-notes-textarea');
 
     taskContainer.style.border = `1px solid ${_handler.getPriorityColor(task)}`;
 
@@ -277,6 +279,29 @@ const buildTask = (task) => {
         setPriorityColor(task, taskContainer);
     })
 
+    const cleanOffNotes = () => {
+        taskNotes.textContent = 'notes'
+        taskNotesTextarea.remove();
+        taskContainer.classList.remove('task-container-with-notes')
+    }
+
+    taskNotes.addEventListener('click', () => {
+        if (taskNotes.textContent == 'notes') {
+            taskNotes.textContent = 'close notes'
+            taskNotesTextarea.value = task.notes;
+            
+            taskNotesTextarea.addEventListener('input', () => {
+                _handler.updateTask(task, {notes:taskNotesTextarea.value});
+            })
+
+            taskContainer.appendChild(taskNotesTextarea);
+            taskContainer.classList.add('task-container-with-notes')
+        } else if (taskNotes.textContent == 'close notes') {
+            cleanOffNotes()
+        }
+
+    })
+
     taskDetails.addEventListener('click', () => {
         if (taskDetails.textContent == 'Details') {
             taskDetails.textContent = 'Less';
@@ -287,6 +312,7 @@ const buildTask = (task) => {
             taskContainer.appendChild(taskDate)
             taskContainer.appendChild(taskSpace)
             taskContainer.appendChild(taskPriority)
+            taskContainer.appendChild(taskNotes)
             taskContainer.appendChild(taskState)
 
         } else if(taskDetails.textContent == 'Less') {
@@ -296,6 +322,9 @@ const buildTask = (task) => {
             taskSpace.remove();
             taskPriority.remove();
             taskState.remove();
+            taskNotes.remove();
+            
+            cleanOffNotes();
 
             taskContainer.appendChild(taskDeleteButton)
             taskContainer.appendChild(taskState)

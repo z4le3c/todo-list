@@ -46,7 +46,6 @@ Task.load = () => {
         Task.list = new Map(data.list);
         _idCounter = data._idCounter;
         Task.spaces = data.spaces;
-        Task.currentSpace = data.currentSpace;
     }
     let currentSpace = window.localStorage.getItem('currentSpace')
     if (currentSpace) {
