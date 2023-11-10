@@ -15,9 +15,7 @@ Handler.handleNewTaskInput = (newTask) => {
     newTask.state
   )
   Task.addTask(task)
-  UI.createTaskList(Task.getTasks([
-    e => e.space === Task.currentSpace
-  ]))
+  UI.createTaskList(Task.getTasks([(e) => e.space === Task.currentSpace]))
   Task.save()
 
   console.log(Task.list)
@@ -95,55 +93,59 @@ Handler.getCurrentSpace = () => {
 
 Handler.getPriorityColor = (task) => {
   const colors = Task.spaces[task.space].colors
-  const colorI = Task.spaces[task.space].priorities.findIndex((e) => e === task.priority)
+  const colorI = Task.spaces[task.space].priorities.findIndex(
+    (e) => e === task.priority
+  )
   return colors[colorI]
 }
 
 // changes the current space and shows that space list.
 Handler.setCurrentSpace = (space) => {
   Task.currentSpace = space
-  UI.createTaskList(Task.getTasks([
-    e => e.space === Task.currentSpace
-  ]))
+  UI.createTaskList(Task.getTasks([(e) => e.space === Task.currentSpace]))
   Task.saveCurrentSpace()
 }
 
-Task.addTask(Task.newTask(
-  'This belongs in Default',
-  '',
-  'notes',
-  '#t1 #t2',
-  'Default',
-  'LOW',
-  'TODO'
-))
+Task.addTask(
+  Task.newTask(
+    'This belongs in Default',
+    '',
+    'notes',
+    '#t1 #t2',
+    'Default',
+    'LOW',
+    'TODO'
+  )
+)
 
-Task.addTask(Task.newTask(
-  'This also belongs to Default',
-  '2023-11-06',
-  'notes',
-  '#t1',
-  'Default',
-  'HIGH',
-  'DOING'
-))
+Task.addTask(
+  Task.newTask(
+    'This also belongs to Default',
+    '2023-11-06',
+    'notes',
+    '#t1',
+    'Default',
+    'HIGH',
+    'DOING'
+  )
+)
 
-Task.addTask(Task.newTask(
-  'This belongs in Other',
-  '',
-  'notes',
-  '#t1 #t2',
-  'Other',
-  'LOW',
-  'TODO'
-))
+Task.addTask(
+  Task.newTask(
+    'This belongs in Other',
+    '',
+    'notes',
+    '#t1 #t2',
+    'Other',
+    'LOW',
+    'TODO'
+  )
+)
 
 Task.load()
 UI.setHandler(Handler)
 UI.createBaseInterface()
-UI.createTaskList(Task.getTasks([
-  e => e.space === Task.currentSpace
-]))
+UI.createTaskList(Task.getTasks([(e) => e.space === Task.currentSpace]))
 
 /**
  * DONE add ability to change spaces task list

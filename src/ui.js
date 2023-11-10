@@ -48,8 +48,16 @@ UI.createBaseInterface = () => {
   addSpaceButton.addEventListener('click', () => {
     const spaceInputContainer = buildElement('div', '', 'space-input-container')
     const textInput = buildElement('input', '', 'space-input')
-    const newSpaceButton = buildElement('button', 'new space', 'new-space-button')
-    const cancelSpaceButton = buildElement('button', 'cancel', 'new-space-button')
+    const newSpaceButton = buildElement(
+      'button',
+      'new space',
+      'new-space-button'
+    )
+    const cancelSpaceButton = buildElement(
+      'button',
+      'cancel',
+      'new-space-button'
+    )
 
     textInput.setAttribute('type', 'text')
     textInput.setAttribute('placeholder', 'space name')
@@ -79,8 +87,16 @@ UI.createBaseInterface = () => {
   })
 
   deleteSpaceButton.addEventListener('click', () => {
-    const spaceWarningContainer = buildElement('div', '', 'space-warning-container')
-    const warningText = buildElement('div', 'Delete current space?', 'delete-space-warning')
+    const spaceWarningContainer = buildElement(
+      'div',
+      '',
+      'space-warning-container'
+    )
+    const warningText = buildElement(
+      'div',
+      'Delete current space?',
+      'delete-space-warning'
+    )
     const confirmButton = buildElement('button', 'Yes', 'deletion-button')
     const cancelButton = buildElement('button', 'Cancel', 'deletion-button')
 
@@ -111,7 +127,11 @@ UI.createBaseInterface = () => {
   editSpaceButton.addEventListener('click', () => {
     const spaceEditContainer = buildElement('div', '', 'space-edit-container')
     const textInput = buildElement('input', '', 'space-edit-input')
-    const confirmButton = buildElement('button', 'change name', 'edit-space-button')
+    const confirmButton = buildElement(
+      'button',
+      'change name',
+      'edit-space-button'
+    )
     const cancelButton = buildElement('button', 'cancel', 'edit-space-button')
 
     textInput.setAttribute('type', 'text')
@@ -168,7 +188,12 @@ UI.createTaskList = (taskList) => {
 
 const buildNewTaskInterface = () => {
   const newTaskContainer = buildElement('div', '', 'new-task-container')
-  const descriptionInput = buildElement('input', '', 'task-description', 'description-input')
+  const descriptionInput = buildElement(
+    'input',
+    '',
+    'task-description',
+    'description-input'
+  )
   const spaceSelect = buildSelect(
     _handler.getCurrentSpace(),
     _handler.getSpacesList(),
@@ -179,8 +204,16 @@ const buildNewTaskInterface = () => {
   const dateInput = buildElement('input', '', 'date-input')
   const posibleStates = _handler.getStates()
   const posiblePriorities = _handler.getPriorities()
-  const prioritySelect = buildSelect(posiblePriorities[0], posiblePriorities, 'new-task-priority')
-  const stateSelect = buildSelect(posibleStates[0], posibleStates, 'new-task-state')
+  const prioritySelect = buildSelect(
+    posiblePriorities[0],
+    posiblePriorities,
+    'new-task-priority'
+  )
+  const stateSelect = buildSelect(
+    posibleStates[0],
+    posibleStates,
+    'new-task-state'
+  )
 
   descriptionInput.setAttribute('type', 'text')
   descriptionInput.setAttribute('placeholder', 'description')
@@ -239,15 +272,32 @@ const buildSelect = (defaultOption, itemList, ...cssClasses) => {
 
 const buildTask = (task) => {
   const taskContainer = buildElement('div', '', 'task-container')
-  const taskDescription = buildElement('input', '', 'task-description', 'description-input')
+  const taskDescription = buildElement(
+    'input',
+    '',
+    'task-description',
+    'description-input'
+  )
   const taskDetails = buildElement('button', 'Details', 'task-details')
   const taskDeleteButton = buildElement('button', 'Delete', 'task-delete')
   const taskState = buildSelect(task.state, _handler.getStates(), 'task-state')
   const taskDate = buildElement('input', '', 'date-input')
-  const taskSpace = buildSelect(task.space, _handler.getSpacesList(), 'task-space')
-  const taskPriority = buildSelect(task.priority, _handler.getPriorities(), 'task-priority')
+  const taskSpace = buildSelect(
+    task.space,
+    _handler.getSpacesList(),
+    'task-space'
+  )
+  const taskPriority = buildSelect(
+    task.priority,
+    _handler.getPriorities(),
+    'task-priority'
+  )
   const taskNotes = buildElement('button', 'notes', 'task-notes')
-  const taskNotesTextarea = buildElement('textarea', task.notes, 'task-notes-textarea')
+  const taskNotesTextarea = buildElement(
+    'textarea',
+    task.notes,
+    'task-notes-textarea'
+  )
 
   taskContainer.style.border = `1px solid ${_handler.getPriorityColor(task)}`
 
